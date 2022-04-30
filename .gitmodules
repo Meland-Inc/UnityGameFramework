@@ -1,0 +1,4 @@
+[submodule "Libraries/GameFramework"]
+	path = Libraries/GameFramework
+	url = https://github.com/Meland-Inc/GameFramework.git
+	branch = meland-main
