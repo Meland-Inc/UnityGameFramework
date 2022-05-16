@@ -103,7 +103,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 创建网络频道。
+        /// 创建并添加内置的网络频道。
         /// </summary>
         /// <param name="name">网络频道名称。</param>
         /// <param name="serviceType">网络服务类型。</param>
@@ -115,13 +115,22 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 销毁网络频道。
+        /// 添加网络频道。
+        /// </summary>
+        /// <param name="networkChannel"></param>
+        public void AddNetworkChannel(INetworkChannel networkChannel)
+        {
+            m_NetworkManager.AddNetworkChannel(networkChannel);
+        }
+
+        /// <summary>
+        /// 移除网络频道。
         /// </summary>
         /// <param name="name">网络频道名称。</param>
         /// <returns>是否销毁网络频道成功。</returns>
-        public bool DestroyNetworkChannel(string name)
+        public bool RemoveNetworkChannel(string name)
         {
-            return m_NetworkManager.DestroyNetworkChannel(name);
+            return m_NetworkManager.RemoveNetworkChannel(name);
         }
 
         private void OnNetworkConnected(object sender, GameFramework.Network.NetworkConnectedEventArgs e)

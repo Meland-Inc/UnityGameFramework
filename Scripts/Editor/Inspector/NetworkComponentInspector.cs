@@ -53,8 +53,8 @@ namespace UnityGameFramework.Editor
                 EditorGUILayout.LabelField(networkChannel.Name, networkChannel.Connected ? "Connected" : "Disconnected");
                 EditorGUILayout.LabelField("Service Type", networkChannel.ServiceType.ToString());
                 EditorGUILayout.LabelField("Address Family", networkChannel.AddressFamily.ToString());
-                EditorGUILayout.LabelField("Local Address", networkChannel.Connected ? networkChannel.Socket.LocalEndPoint.ToString() : "Unavailable");
-                EditorGUILayout.LabelField("Remote Address", networkChannel.Connected ? networkChannel.Socket.RemoteEndPoint.ToString() : "Unavailable");
+                EditorGUILayout.LabelField("Local Address", networkChannel.Connected ? networkChannel.LocalAddress : "Unavailable");
+                EditorGUILayout.LabelField("Remote Address", networkChannel.Connected ? networkChannel.RemoteAddress : "Unavailable");
                 EditorGUILayout.LabelField("Send Packet", Utility.Text.Format("{0} / {1}", networkChannel.SendPacketCount, networkChannel.SentPacketCount));
                 EditorGUILayout.LabelField("Receive Packet", Utility.Text.Format("{0} / {1}", networkChannel.ReceivePacketCount, networkChannel.ReceivedPacketCount));
                 EditorGUILayout.LabelField("Miss Heart Beat Count", networkChannel.MissHeartBeatCount.ToString());
