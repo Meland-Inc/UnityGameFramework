@@ -107,27 +107,26 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (m_EntityLogic != null)
+            if (m_EntityLogic != null && m_EntityLogic.GetType() != entityLogicType)
             {
-                if (m_EntityLogic.GetType() == entityLogicType)
-                {
-                    m_EntityLogic.enabled = true;
-                    return;
-                }
-
                 Destroy(m_EntityLogic);
                 m_EntityLogic = null;
             }
 
-            m_EntityLogic = gameObject.AddComponent(entityLogicType) as EntityLogic;
+
             if (m_EntityLogic == null)
             {
-                Log.Error("Entity '{0}' can not add entity logic.", entityAssetName);
-                return;
+                m_EntityLogic = gameObject.AddComponent(entityLogicType) as EntityLogic;
+                if (m_EntityLogic == null)
+                {
+                    Log.Error("Entity '{0}' can not add entity logic.", entityAssetName);
+                    return;
+                }
             }
 
             try
             {
+                m_EntityLogic.enabled = true;
                 m_EntityLogic.OnInit(showEntityInfo.UserData);
             }
             catch (Exception exception)
