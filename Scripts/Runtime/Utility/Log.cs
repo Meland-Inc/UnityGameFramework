@@ -15,17 +15,17 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     public static class Log
     {
+        private const string DEFAULT_TAG = "unknown";
+
         /// <summary>
-        /// 打印调试级别日志，用于记录调试类日志信息。
+        /// 装饰消息
         /// </summary>
-        /// <param name="message">日志内容。</param>
-        /// <remarks>仅在带有 ENABLE_LOG、ENABLE_DEBUG_LOG 或 ENABLE_DEBUG_AND_ABOVE_LOG 预编译选项时生效。</remarks>
-        [Conditional("ENABLE_LOG")]
-        [Conditional("ENABLE_DEBUG_LOG")]
-        [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug(object message)
+        /// <param name="tag">日志tag</param>
+        /// <param name="message">源日志消息</param>
+        /// <returns></returns>
+        private static string DecorateMessage(string tag, string message)
         {
-            GameFrameworkLog.Debug(message);
+            return $"[{tag}] {message}";
         }
 
         /// <summary>
@@ -36,9 +36,22 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug(string message)
+        public static void Debug(object message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(message);
+            GameFrameworkLog.Debug(DecorateMessage(tag, message.ToString()));
+        }
+
+        /// <summary>
+        /// 打印调试级别日志，用于记录调试类日志信息。
+        /// </summary>
+        /// <param name="message">日志内容。</param>
+        /// <remarks>仅在带有 ENABLE_LOG、ENABLE_DEBUG_LOG 或 ENABLE_DEBUG_AND_ABOVE_LOG 预编译选项时生效。</remarks>
+        [Conditional("ENABLE_LOG")]
+        [Conditional("ENABLE_DEBUG_LOG")]
+        [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
+        public static void Debug(string message, string tag = DEFAULT_TAG)
+        {
+            GameFrameworkLog.Debug(DecorateMessage(tag, message));
         }
 
         /// <summary>
@@ -51,9 +64,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T>(string format, T arg)
+        public static void Debug<T>(string format, T arg, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg);
         }
 
         /// <summary>
@@ -68,9 +81,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2>(string format, T1 arg1, T2 arg2)
+        public static void Debug<T1, T2>(string format, T1 arg1, T2 arg2, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2);
         }
 
         /// <summary>
@@ -87,9 +100,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3)
+        public static void Debug<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3);
         }
 
         /// <summary>
@@ -108,9 +121,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static void Debug<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4);
         }
 
         /// <summary>
@@ -131,9 +144,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+        public static void Debug<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5);
         }
 
         /// <summary>
@@ -156,9 +169,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+        public static void Debug<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         /// <summary>
@@ -183,9 +196,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
 
         /// <summary>
@@ -212,9 +225,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
 
         /// <summary>
@@ -243,9 +256,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
@@ -276,9 +289,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
         /// <summary>
@@ -311,9 +324,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }
 
         /// <summary>
@@ -348,9 +361,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
@@ -387,9 +400,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
@@ -428,9 +441,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }
 
         /// <summary>
@@ -471,9 +484,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         /// <summary>
@@ -516,9 +529,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_LOG")]
         [Conditional("ENABLE_DEBUG_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
-        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+        public static void Debug<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Debug(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
+            GameFrameworkLog.Debug(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }
 
         /// <summary>
@@ -530,9 +543,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info(object message)
+        public static void Info(object message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(message);
+            GameFrameworkLog.Info(DecorateMessage(tag, message.ToString()));
         }
 
         /// <summary>
@@ -544,9 +557,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info(string message)
+        public static void Info(string message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(message);
+            GameFrameworkLog.Info(DecorateMessage(tag, message));
         }
 
         /// <summary>
@@ -560,9 +573,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T>(string format, T arg)
+        public static void Info<T>(string format, T arg, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg);
         }
 
         /// <summary>
@@ -578,9 +591,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2>(string format, T1 arg1, T2 arg2)
+        public static void Info<T1, T2>(string format, T1 arg1, T2 arg2, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2);
         }
 
         /// <summary>
@@ -598,9 +611,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3)
+        public static void Info<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3);
         }
 
         /// <summary>
@@ -620,9 +633,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static void Info<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4);
         }
 
         /// <summary>
@@ -644,9 +657,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+        public static void Info<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5);
         }
 
         /// <summary>
@@ -670,9 +683,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+        public static void Info<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         /// <summary>
@@ -698,9 +711,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
 
         /// <summary>
@@ -728,9 +741,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
 
         /// <summary>
@@ -760,9 +773,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
@@ -794,9 +807,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
         /// <summary>
@@ -830,9 +843,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }
 
         /// <summary>
@@ -868,9 +881,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
@@ -908,9 +921,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
@@ -950,9 +963,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }
 
         /// <summary>
@@ -994,9 +1007,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         /// <summary>
@@ -1040,9 +1053,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_LOG")]
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
-        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+        public static void Info<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Info(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
+            GameFrameworkLog.Info(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }
 
         /// <summary>
@@ -1055,9 +1068,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning(object message)
+        public static void Warning(object message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(message);
+            GameFrameworkLog.Warning(DecorateMessage(tag, message.ToString()));
         }
 
         /// <summary>
@@ -1070,9 +1083,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning(string message)
+        public static void Warning(string message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(message);
+            GameFrameworkLog.Warning(DecorateMessage(tag, message));
         }
 
         /// <summary>
@@ -1087,9 +1100,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T>(string format, T arg)
+        public static void Warning<T>(string format, T arg, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg);
         }
 
         /// <summary>
@@ -1106,9 +1119,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2>(string format, T1 arg1, T2 arg2)
+        public static void Warning<T1, T2>(string format, T1 arg1, T2 arg2, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2);
         }
 
         /// <summary>
@@ -1127,9 +1140,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3)
+        public static void Warning<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3);
         }
 
         /// <summary>
@@ -1150,9 +1163,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static void Warning<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4);
         }
 
         /// <summary>
@@ -1175,9 +1188,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+        public static void Warning<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5);
         }
 
         /// <summary>
@@ -1202,9 +1215,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+        public static void Warning<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         /// <summary>
@@ -1231,9 +1244,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
 
         /// <summary>
@@ -1262,9 +1275,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
 
         /// <summary>
@@ -1295,9 +1308,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
@@ -1330,9 +1343,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
         /// <summary>
@@ -1367,9 +1380,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }
 
         /// <summary>
@@ -1406,9 +1419,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
@@ -1447,9 +1460,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
@@ -1490,9 +1503,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }
 
         /// <summary>
@@ -1535,9 +1548,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         /// <summary>
@@ -1582,9 +1595,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_DEBUG_AND_ABOVE_LOG")]
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
-        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+        public static void Warning<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Warning(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
+            GameFrameworkLog.Warning(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }
 
         /// <summary>
@@ -1598,9 +1611,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error(object message)
+        public static void Error(object message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(message);
+            GameFrameworkLog.Error(DecorateMessage(tag, message.ToString()));
         }
 
         /// <summary>
@@ -1614,9 +1627,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error(string message)
+        public static void Error(string message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(message);
+            GameFrameworkLog.Error(DecorateMessage(tag, message));
         }
 
         /// <summary>
@@ -1632,9 +1645,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T>(string format, T arg)
+        public static void Error<T>(string format, T arg, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg);
         }
 
         /// <summary>
@@ -1652,9 +1665,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2>(string format, T1 arg1, T2 arg2)
+        public static void Error<T1, T2>(string format, T1 arg1, T2 arg2, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2);
         }
 
         /// <summary>
@@ -1674,9 +1687,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3)
+        public static void Error<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3);
         }
 
         /// <summary>
@@ -1698,9 +1711,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static void Error<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4);
         }
 
         /// <summary>
@@ -1724,9 +1737,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+        public static void Error<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5);
         }
 
         /// <summary>
@@ -1752,9 +1765,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+        public static void Error<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         /// <summary>
@@ -1782,9 +1795,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
 
         /// <summary>
@@ -1814,9 +1827,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
 
         /// <summary>
@@ -1848,9 +1861,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
@@ -1884,9 +1897,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
         /// <summary>
@@ -1922,9 +1935,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }
 
         /// <summary>
@@ -1962,9 +1975,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
@@ -2004,9 +2017,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
@@ -2048,9 +2061,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }
 
         /// <summary>
@@ -2094,9 +2107,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         /// <summary>
@@ -2142,9 +2155,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_INFO_AND_ABOVE_LOG")]
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
-        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+        public static void Error<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Error(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
+            GameFrameworkLog.Error(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }
 
         /// <summary>
@@ -2159,9 +2172,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal(object message)
+        public static void Fatal(object message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(message);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, message.ToString()));
         }
 
         /// <summary>
@@ -2176,9 +2189,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal(string message)
+        public static void Fatal(string message, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(message);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, message));
         }
 
         /// <summary>
@@ -2195,9 +2208,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T>(string format, T arg)
+        public static void Fatal<T>(string format, T arg, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg);
         }
 
         /// <summary>
@@ -2216,9 +2229,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2>(string format, T1 arg1, T2 arg2)
+        public static void Fatal<T1, T2>(string format, T1 arg1, T2 arg2, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2);
         }
 
         /// <summary>
@@ -2239,9 +2252,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3)
+        public static void Fatal<T1, T2, T3>(string format, T1 arg1, T2 arg2, T3 arg3, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3);
         }
 
         /// <summary>
@@ -2264,9 +2277,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static void Fatal<T1, T2, T3, T4>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4);
         }
 
         /// <summary>
@@ -2291,9 +2304,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+        public static void Fatal<T1, T2, T3, T4, T5>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5);
         }
 
         /// <summary>
@@ -2320,9 +2333,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+        public static void Fatal<T1, T2, T3, T4, T5, T6>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         /// <summary>
@@ -2351,9 +2364,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
 
         /// <summary>
@@ -2384,9 +2397,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
 
         /// <summary>
@@ -2419,9 +2432,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
@@ -2456,9 +2469,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
         /// <summary>
@@ -2495,9 +2508,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }
 
         /// <summary>
@@ -2536,9 +2549,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
@@ -2579,9 +2592,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
@@ -2624,9 +2637,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }
 
         /// <summary>
@@ -2671,9 +2684,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         /// <summary>
@@ -2720,9 +2733,9 @@ namespace UnityGameFramework.Runtime
         [Conditional("ENABLE_WARNING_AND_ABOVE_LOG")]
         [Conditional("ENABLE_ERROR_AND_ABOVE_LOG")]
         [Conditional("ENABLE_FATAL_AND_ABOVE_LOG")]
-        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+        public static void Fatal<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16, string tag = DEFAULT_TAG)
         {
-            GameFrameworkLog.Fatal(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
+            GameFrameworkLog.Fatal(DecorateMessage(tag, format), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }
     }
 }
