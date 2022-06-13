@@ -1593,42 +1593,46 @@ namespace UnityGameFramework.Runtime
                 return false;
             }
 
-            string[] splitedAssetFullName = assetFullName.Split('/');
-            string currentPath = Path.GetPathRoot(assetFullName);
-            for (int i = 1; i < splitedAssetFullName.Length - 1; i++)
-            {
-                string[] directoryNames = Directory.GetDirectories(currentPath, splitedAssetFullName[i]);
-                if (directoryNames.Length != 1)
-                {
-                    return false;
-                }
+            return File.Exists(assetFullName);
 
-                currentPath = directoryNames[0];
-            }
+            //大量文件时这里有性能热点 看逻辑貌似是为了检测配置的名字和实际加载上来的是不是同名 可能存在大小写不一样也被加载的情况
+            //我们暂时就按照系统能加就加
+            // string[] splitedAssetFullName = assetFullName.Split('/');
+            // string currentPath = Path.GetPathRoot(assetFullName);
+            // for (int i = 1; i < splitedAssetFullName.Length - 1; i++)
+            // {
+            //     string[] directoryNames = Directory.GetDirectories(currentPath, splitedAssetFullName[i]);
+            //     if (directoryNames.Length != 1)
+            //     {
+            //         return false;
+            //     }
 
-            string[] fileNames = Directory.GetFiles(currentPath, splitedAssetFullName[splitedAssetFullName.Length - 1]);
-            if (fileNames.Length != 1)
-            {
-                return false;
-            }
+            //     currentPath = directoryNames[0];
+            // }
 
-            string fileFullName = Utility.Path.GetRegularPath(fileNames[0]);
-            if (fileFullName == null)
-            {
-                return false;
-            }
+            // string[] fileNames = Directory.GetFiles(currentPath, splitedAssetFullName[splitedAssetFullName.Length - 1]);
+            // if (fileNames.Length != 1)
+            // {
+            //     return false;
+            // }
 
-            if (assetFullName != fileFullName)
-            {
-                if (assetFullName.ToLowerInvariant() == fileFullName.ToLowerInvariant())
-                {
-                    Log.Warning("The real path of the specific asset '{0}' is '{1}'. Check the case of letters in the path.", assetName, "Assets" + fileFullName.Substring(Application.dataPath.Length));
-                }
+            // string fileFullName = Utility.Path.GetRegularPath(fileNames[0]);
+            // if (fileFullName == null)
+            // {
+            //     return false;
+            // }
 
-                return false;
-            }
+            // if (assetFullName != fileFullName)
+            // {
+            //     if (assetFullName.ToLowerInvariant() == fileFullName.ToLowerInvariant())
+            //     {
+            //         Log.Warning("The real path of the specific asset '{0}' is '{1}'. Check the case of letters in the path.", assetName, "Assets" + fileFullName.Substring(Application.dataPath.Length));
+            //     }
 
-            return true;
+            //     return false;
+            // }
+
+            // return true;
         }
 
         private bool HasCachedAsset(string assetName)
