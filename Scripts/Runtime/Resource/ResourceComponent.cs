@@ -1041,11 +1041,6 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            if (!assetName.StartsWith("Assets/", StringComparison.Ordinal))
-            {
-                Log.Error("Asset name '{0}' is invalid.", assetName);
-                return;
-            }
 
             m_ResourceManager.LoadAsset(assetName, assetType, priority, loadAssetCallbacks, userData);
         }
