@@ -47,6 +47,12 @@ namespace UnityGameFramework.Runtime
         private GameFrameworkLinkedList<LoadSceneInfo> m_LoadSceneInfos = null;
         private GameFrameworkLinkedList<UnloadSceneInfo> m_UnloadSceneInfos = null;
 
+        private Dictionary<string, List<LoadAssetInfo>> _loadWebAssetInfos = null;//加载中的网络资源
+        private Queue<string> _loadWebAssetQueue = null; //网络资源等待加载队列
+        private List<LoadWebAssetAgent> _loadWebAssetAgents = null; //网络代理列表
+        private int _freeLoadWebAssetAgent = 0; //空闲网络代理数
+        private const int MAX_LOAD_WEB_ASSET_AGENT = 3; //最大网络代理请求数
+
         /// <summary>
         /// 获取资源只读区路径。
         /// </summary>
@@ -483,7 +489,7 @@ namespace UnityGameFramework.Runtime
         {
             get
             {
-                return m_LoadAssetInfos.Count;
+                return m_LoadAssetInfos.Count + _loadWebAssetInfos.Count;
             }
         }
 
@@ -554,6 +560,18 @@ namespace UnityGameFramework.Runtime
             m_LoadAssetInfos = new GameFrameworkLinkedList<LoadAssetInfo>();
             m_LoadSceneInfos = new GameFrameworkLinkedList<LoadSceneInfo>();
             m_UnloadSceneInfos = new GameFrameworkLinkedList<UnloadSceneInfo>();
+            _loadWebAssetInfos = new();
+            _loadWebAssetQueue = new();
+            _loadWebAssetAgents = new();
+            for (int i = 0; i < MAX_LOAD_WEB_ASSET_AGENT; i++)
+            {
+                LoadWebAssetAgent agent = new();
+                agent.LoadWebAssetUpdate += LoadWebAssetUpdate;
+                agent.LoadWebAssetComplete += LoadWebAssetComplete;
+                agent.LoadWebAssetError += LoadWebAssetError;
+                _loadWebAssetAgents.Add(agent);
+            }
+            _freeLoadWebAssetAgent = MAX_LOAD_WEB_ASSET_AGENT;
 
             BaseComponent baseComponent = GetComponent<BaseComponent>();
             if (baseComponent == null)
@@ -572,7 +590,86 @@ namespace UnityGameFramework.Runtime
                 enabled = false;
             }
         }
+        private void LoadWebAssetUpdate(string url, float progress)
+        {
+            //
+        }
 
+        private void LoadWebAssetComplete(string url, object asset)
+        {
+            if (_loadWebAssetInfos.TryGetValue(url, out List<LoadAssetInfo> infoList))
+            {
+                for (int i = 0; i < infoList.Count; i++)
+                {
+                    LoadAssetInfo loadAssetInfo = infoList[i];
+                    float elapseSeconds = (float)(DateTime.UtcNow - loadAssetInfo.StartTime).TotalSeconds;
+                    loadAssetInfo.LoadAssetCallbacks.LoadAssetSuccessCallback?.Invoke(loadAssetInfo.AssetName, asset, elapseSeconds, loadAssetInfo.UserData);
+                }
+                _ = _loadWebAssetInfos.Remove(url);
+                m_CachedAssets.Add(url, (UnityEngine.Object)asset);
+            }
+            _freeLoadWebAssetAgent++;
+        }
+
+        private void LoadWebAssetError(string url, string errorStr)
+        {
+            if (_loadWebAssetInfos.TryGetValue(url, out List<LoadAssetInfo> infoList))
+            {
+                for (int i = 0; i < infoList.Count; i++)
+                {
+                    LoadAssetInfo loadAssetInfo = infoList[i];
+                    loadAssetInfo.LoadAssetCallbacks.LoadAssetFailureCallback?.Invoke(loadAssetInfo.AssetName, LoadResourceStatus.AssetError, errorStr, loadAssetInfo.UserData);
+                }
+                _ = _loadWebAssetInfos.Remove(url);
+            }
+            _freeLoadWebAssetAgent++;
+        }
+
+        private void UpdateWebAsset()
+        {
+            if (_freeLoadWebAssetAgent < MAX_LOAD_WEB_ASSET_AGENT)
+            {
+                for (int i = 0; i < _loadWebAssetAgents.Count; i++)
+                {
+                    if (!_loadWebAssetAgents[i].isFree())
+                    {
+                        _loadWebAssetAgents[i].Update();
+                    }
+                }
+            }
+
+            if (_loadWebAssetQueue.Count > 0 && _freeLoadWebAssetAgent > 0)
+            {
+
+                string assetName = _loadWebAssetQueue.Dequeue();
+                UnityEngine.Object asset = GetCachedAsset(assetName);
+                if (asset == null)
+                {
+                    LoadWebAssetAgent agent = null;
+                    for (int i = 0; i < _loadWebAssetAgents.Count; i++)
+                    {
+                        if (_loadWebAssetAgents[i].isFree())
+                        {
+                            agent = _loadWebAssetAgents[i];
+                            break;
+                        }
+                    }
+                    if (agent == null)
+                    {
+                        _freeLoadWebAssetAgent = 0;
+                        _loadWebAssetQueue.Enqueue(assetName);
+                        return;
+                    }
+                    agent.LoadAsset(assetName);
+                    _freeLoadWebAssetAgent--;
+                }
+                else
+                {
+                    LoadWebAssetComplete(assetName, asset);
+                }
+
+            }
+        }
         private void Update()
         {
             if (m_LoadAssetInfos.Count > 0)
@@ -709,6 +806,7 @@ namespace UnityGameFramework.Runtime
                     }
                 }
             }
+            UpdateWebAsset();
         }
 
         /// <summary>
@@ -1058,7 +1156,18 @@ namespace UnityGameFramework.Runtime
 
                 return;
             }
-
+            //网络资源
+            if (Utility.Path.IsUrl(assetName))
+            {
+                if (!_loadWebAssetInfos.TryGetValue(assetName, out List<LoadAssetInfo> infoList))
+                {
+                    infoList = new();
+                    _loadWebAssetInfos.Add(assetName, infoList);
+                    _loadWebAssetQueue.Enqueue(assetName);
+                }
+                infoList.Add(new LoadAssetInfo(assetName, assetType, priority, DateTime.UtcNow, m_MinLoadAssetRandomDelaySeconds + (float)Utility.Random.GetRandomDouble() * (m_MaxLoadAssetRandomDelaySeconds - m_MinLoadAssetRandomDelaySeconds), loadAssetCallbacks, userData));
+                return;
+            }
             if (!assetName.StartsWith("Assets/", StringComparison.Ordinal))
             {
                 if (loadAssetCallbacks.LoadAssetFailureCallback != null)

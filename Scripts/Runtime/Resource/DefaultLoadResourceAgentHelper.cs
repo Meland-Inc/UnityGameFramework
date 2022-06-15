@@ -27,8 +27,8 @@ namespace UnityGameFramework.Runtime
         private string m_FileName = null;
         private string m_BytesFullPath = null;
         private string m_AssetName = null;
-        private float m_LastProgress = 0f;
-        private bool m_Disposed = false;
+        protected float m_LastProgress = 0f;
+        protected bool m_Disposed = false;
 #if UNITY_5_4_OR_NEWER
         private UnityWebRequest m_UnityWebRequest = null;
 #else
@@ -39,12 +39,12 @@ namespace UnityGameFramework.Runtime
         private AssetBundleRequest m_AssetBundleRequest = null;
         private AsyncOperation m_AsyncOperation = null;
 
-        private EventHandler<LoadResourceAgentHelperUpdateEventArgs> m_LoadResourceAgentHelperUpdateEventHandler = null;
-        private EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs> m_LoadResourceAgentHelperReadFileCompleteEventHandler = null;
-        private EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs> m_LoadResourceAgentHelperReadBytesCompleteEventHandler = null;
-        private EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs> m_LoadResourceAgentHelperParseBytesCompleteEventHandler = null;
-        private EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs> m_LoadResourceAgentHelperLoadCompleteEventHandler = null;
-        private EventHandler<LoadResourceAgentHelperErrorEventArgs> m_LoadResourceAgentHelperErrorEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperUpdateEventArgs> m_LoadResourceAgentHelperUpdateEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs> m_LoadResourceAgentHelperReadFileCompleteEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs> m_LoadResourceAgentHelperReadBytesCompleteEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs> m_LoadResourceAgentHelperParseBytesCompleteEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs> m_LoadResourceAgentHelperLoadCompleteEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperErrorEventArgs> m_LoadResourceAgentHelperErrorEventHandler = null;
 
         /// <summary>
         /// 加载资源代理辅助器异步加载资源更新事件。
@@ -366,7 +366,7 @@ namespace UnityGameFramework.Runtime
             m_Disposed = true;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
 #if UNITY_5_4_OR_NEWER
             UpdateUnityWebRequest();
@@ -591,5 +591,11 @@ namespace UnityGameFramework.Runtime
                 }
             }
         }
+
+        public override void LoadWebAsset(string fullPath)
+        {
+            //
+        }
+
     }
 }

@@ -1040,8 +1040,7 @@ namespace UnityGameFramework.Runtime
                 Log.Error("Asset name is invalid.");
                 return;
             }
-
-            if (!assetName.StartsWith("Assets/", StringComparison.Ordinal))
+            if (!assetName.StartsWith("Assets/", StringComparison.Ordinal) && !Utility.Path.IsUrl(assetName))
             {
                 Log.Error("Asset name '{0}' is invalid.", assetName);
                 return;
