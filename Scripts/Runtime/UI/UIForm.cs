@@ -1,4 +1,5 @@
-﻿//------------------------------------------------------------
+﻿
+//------------------------------------------------------------
 // Game Framework
 // Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
@@ -137,6 +138,12 @@ namespace UnityGameFramework.Runtime
             {
                 Log.Error("UI form '[{0}]{1}' OnInit with exception '{2}'.", m_SerialId, m_UIFormAssetName, exception);
             }
+        }
+
+        public void OnDispose()
+        {
+            m_UIFormLogic.OnDispose();
+            Destroy(gameObject);
         }
 
         /// <summary>
