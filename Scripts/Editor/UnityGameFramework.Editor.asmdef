@@ -3,7 +3,9 @@
     "rootNamespace": "",
     "references": [
         "UnityGameFramework.Runtime",
-        "GameFramework"
+        "GameFramework",
+        "ShareUnityGameFramework.Editor",
+        "ShareUnityGameFramework.Runtime"
     ],
     "includePlatforms": [
         "Editor"
