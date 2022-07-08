@@ -1,8 +1,8 @@
 /*
  * @Author: xiang huan
  * @Date: 2022-06-13 15:38:25
- * @LastEditTime: 2022-06-13 21:12:12
- * @LastEditors: xiang huan
+ * @LastEditTime: 2022-07-08 11:18:58
+ * @LastEditors: Please set LastEditors
  * @Description: 网络资产请求代理
  * @FilePath: /meland-unity/Assets/Thirdparty/UnityGameFramework/Scripts/Runtime/Resource/LoadWebAssetAgent.cs
  * 
@@ -124,14 +124,5 @@ namespace UnityGameFramework.Runtime
         {
             return _unityWebRequest == null;
         }
-    }
-
-    public enum eLoadWebAssetType
-    {
-        Text,       //文本
-        Texture,    //图片
-        Audio,      //音频
-        Movie,      //视频
-        Byte,       //二进制数据
     }
 }
