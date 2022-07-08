@@ -4,8 +4,7 @@
     "references": [
         "UnityGameFramework.Runtime",
         "GameFramework",
-        "ShareUnityGameFramework.Editor",
-        "ShareUnityGameFramework.Runtime"
+        "SharedCore.Runtime"
     ],
     "includePlatforms": [
         "Editor"
