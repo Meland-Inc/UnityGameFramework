@@ -76,6 +76,7 @@ namespace UnityGameFramework.Runtime
                 Log.Fatal("Data table manager is invalid.");
                 return;
             }
+            SharedGFEntryUtil.SetDataTable(m_DataTableManager);
         }
 
         private void Start()
