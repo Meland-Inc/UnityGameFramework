@@ -19,7 +19,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Data Table")]
-    public sealed class DataTableComponent : GameFrameworkComponent
+    public sealed class DataTableComponent : GameFrameworkComponent, IDataTableComponent
     {
         private const int DefaultPriority = 0;
 
@@ -76,7 +76,7 @@ namespace UnityGameFramework.Runtime
                 Log.Fatal("Data table manager is invalid.");
                 return;
             }
-            SharedGFEntryUtil.SetDataTable(m_DataTableManager);
+            SharedGFEntryUtil.SetDataTable(this);
         }
 
         private void Start()
