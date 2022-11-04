@@ -726,5 +726,10 @@ namespace UnityGameFramework.Runtime
         {
             m_EventComponent.Fire(this, CloseUIFormCompleteEventArgs.Create(e));
         }
+
+        public void SetUIActive(bool isActive)
+        {
+            m_InstanceRoot.gameObject.SetActive(isActive);
+        }
     }
 }
