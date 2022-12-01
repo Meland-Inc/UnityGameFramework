@@ -23,6 +23,7 @@ namespace UnityGameFramework.Editor
 #endif
             "Assembly-CSharp",
             "SharedCore.Runtime",
+            "LaunchAOT"
         };
 
         private static readonly string[] RuntimeOrEditorAssemblyNames =
