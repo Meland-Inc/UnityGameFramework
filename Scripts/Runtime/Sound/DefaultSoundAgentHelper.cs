@@ -307,7 +307,9 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public override void Reset()
         {
-            m_CachedTransform.localPosition = Vector3.zero;
+            //todo 重置声音位置为0，会导致偶尔播放声音后立马停止，原因未知，暂时屏蔽
+            //这里屏蔽了理论上没啥影响，需要绑定实体或者位置的声音每次播放时都会重新设置位置
+            //m_CachedTransform.localPosition = Vector3.zero;
             m_AudioSource.clip = null;
             m_BindingEntityLogic = null;
             m_VolumeWhenPause = 0f;
