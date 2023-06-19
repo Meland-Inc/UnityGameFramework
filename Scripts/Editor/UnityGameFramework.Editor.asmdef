@@ -2,9 +2,8 @@
     "name": "UnityGameFramework.Editor",
     "rootNamespace": "",
     "references": [
-        "UnityGameFramework.Runtime",
         "GameFramework",
-        "SharedCore.Runtime"
+        "UnityGameFramework.Runtime"
     ],
     "includePlatforms": [
         "Editor"

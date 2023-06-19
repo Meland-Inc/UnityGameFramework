@@ -22,8 +22,7 @@ namespace UnityGameFramework.Editor
             "UnityGameFramework.Runtime",
 #endif
             "Assembly-CSharp",
-            "SharedCore.Runtime.Aot",
-            "SharedCore.Runtime.HotFix",
+            "SharedCore.Runtime",
             "LaunchAOT"
         };
 
@@ -37,8 +36,7 @@ namespace UnityGameFramework.Editor
             "UnityGameFramework.Editor",
 #endif
             "Assembly-CSharp-Editor",
-            "SharedCore.Runtime.Aot",
-            "SharedCore.Runtime.HotFix",
+            "SharedCore.Runtime",
         };
 
         /// <summary>
