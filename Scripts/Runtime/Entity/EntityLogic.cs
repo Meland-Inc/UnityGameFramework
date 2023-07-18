@@ -181,14 +181,15 @@ namespace UnityGameFramework.Runtime
             CachedTransform.SetParent(m_OriginalTransform);
         }
 
-        /// <summary>
-        /// 实体轮询。
-        /// </summary>
-        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
-        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        protected internal virtual void OnUpdate(float elapseSeconds, float realElapseSeconds)
-        {
-        }
+        // 性能优化 没地方使用
+        // /// <summary>
+        // /// 实体轮询。
+        // /// </summary>
+        // /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+        // /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+        // protected internal virtual void OnUpdate(float elapseSeconds, float realElapseSeconds)
+        // {
+        // }
 
         /// <summary>
         /// 设置实体的可见性。
