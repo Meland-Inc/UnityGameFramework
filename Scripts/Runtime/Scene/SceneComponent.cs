@@ -297,6 +297,7 @@ namespace UnityGameFramework.Runtime
             }
 
             m_SceneManager.LoadScene(sceneAssetName, priority, userData);
+            m_EventComponent.Fire(this, LoadSceneStartEventArgs.Create(sceneAssetName, userData));
         }
 
         /// <summary>
