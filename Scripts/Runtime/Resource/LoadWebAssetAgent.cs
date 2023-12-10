@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-07-08 11:18:58
  * @LastEditors: Please set LastEditors
  * @Description: 网络资产请求代理
- * @FilePath: /meland-unity/Assets/Thirdparty/UnityGameFramework/Scripts/Runtime/Resource/LoadWebAssetAgent.cs
+ * @FilePath: /lumiterra-unity/Assets/Thirdparty/UnityGameFramework/Scripts/Runtime/Resource/LoadWebAssetAgent.cs
  * 
  */
 using GameFramework;
