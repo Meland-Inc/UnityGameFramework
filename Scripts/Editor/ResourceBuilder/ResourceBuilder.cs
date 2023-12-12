@@ -250,6 +250,12 @@ namespace UnityGameFramework.Editor.ResourceTools
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
                     {
+                        EditorGUILayout.LabelField("Res version Display ", GUILayout.Width(160f));
+                        m_Controller.ResVersionDisplay = EditorGUILayout.TextField(m_Controller.ResVersionDisplay);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    {
                         EditorGUILayout.LabelField("Resource Version", GUILayout.Width(160f));
                         GUILayout.Label(Utility.Text.Format("{0} ({1})", m_Controller.ApplicableGameVersion, m_Controller.InternalResourceVersion));
                     }
