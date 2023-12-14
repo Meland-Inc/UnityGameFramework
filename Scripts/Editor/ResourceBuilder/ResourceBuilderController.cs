@@ -174,6 +174,12 @@ namespace UnityGameFramework.Editor.ResourceTools
             set;
         }
 
+        public string ResVersionDisplay
+        {
+            get;
+            set;
+        }
+
         public Platform Platforms
         {
             get;
@@ -362,7 +368,9 @@ namespace UnityGameFramework.Editor.ResourceTools
                         case "InternalResourceVersion":
                             InternalResourceVersion = int.Parse(xmlNode.InnerText) + 1;
                             break;
-
+                        case "ResVersionDisplay":
+                            ResVersionDisplay = xmlNode.InnerText;
+                            break;
                         case "Platforms":
                             Platforms = (Platform)int.Parse(xmlNode.InnerText);
                             break;
@@ -434,6 +442,9 @@ namespace UnityGameFramework.Editor.ResourceTools
 
                 xmlElement = xmlDocument.CreateElement("InternalResourceVersion");
                 xmlElement.InnerText = InternalResourceVersion.ToString();
+                xmlSettings.AppendChild(xmlElement);
+                xmlElement = xmlDocument.CreateElement("ResVersionDisplay");
+                xmlElement.InnerText = ResVersionDisplay;
                 xmlSettings.AppendChild(xmlElement);
                 xmlElement = xmlDocument.CreateElement("Platforms");
                 xmlElement.InnerText = ((int)Platforms).ToString();
@@ -612,7 +623,7 @@ namespace UnityGameFramework.Editor.ResourceTools
                 if (m_BuildEventHandler != null)
                 {
                     m_BuildReport.LogInfo("Execute build event handler 'OnPreprocessAllPlatforms'...");
-                    m_BuildEventHandler.OnPreprocessAllPlatforms(ProductName, CompanyName, GameIdentifier, GameFrameworkVersion, UnityVersion, ApplicableGameVersion, InternalResourceVersion,
+                    m_BuildEventHandler.OnPreprocessAllPlatforms(ProductName, CompanyName, GameIdentifier, GameFrameworkVersion, UnityVersion, ApplicableGameVersion, ResVersionDisplay, InternalResourceVersion,
                         Platforms, AssetBundleCompression, CompressionHelperTypeName, AdditionalCompressionSelected, ForceRebuildAssetBundleSelected, BuildEventHandlerTypeName, OutputDirectory, buildAssetBundleOptions,
                         WorkingPath, OutputPackageSelected, OutputPackagePath, OutputFullSelected, OutputFullPath, OutputPackedSelected, OutputPackedPath, BuildReportPath);
                 }
