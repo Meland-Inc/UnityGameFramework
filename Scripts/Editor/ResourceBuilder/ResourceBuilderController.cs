@@ -369,7 +369,16 @@ namespace UnityGameFramework.Editor.ResourceTools
                             InternalResourceVersion = int.Parse(xmlNode.InnerText) + 1;
                             break;
                         case "ResVersionDisplay":
-                            ResVersionDisplay = xmlNode.InnerText;
+                            //最后一个版本号+1
+                            string[] versionSplit = xmlNode.InnerText.Split('.');
+                            if (versionSplit.Length > 0)
+                            {
+                                if (int.TryParse(versionSplit[^1], out int lastVersionNum))
+                                {
+                                    versionSplit[^1] = (lastVersionNum + 1).ToString();
+                                }
+                            }
+                            ResVersionDisplay = string.Join(".", versionSplit);
                             break;
                         case "Platforms":
                             Platforms = (Platform)int.Parse(xmlNode.InnerText);
