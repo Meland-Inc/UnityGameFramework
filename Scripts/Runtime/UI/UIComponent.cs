@@ -594,6 +594,15 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 通过资源路径关闭界面，相比用serialId关闭，这个性能差一丢丢，能用serialId的尽量用serialId
+        /// </summary>
+        /// <param name="assetName">要关闭界面的资源路径</param>
+        public void CloseUIForm(string assetName)
+        {
+            m_UIManager.CloseUIForm(assetName);
+        }
+
+        /// <summary>
         /// 关闭界面。
         /// </summary>
         /// <param name="serialId">要关闭界面的序列编号。</param>
