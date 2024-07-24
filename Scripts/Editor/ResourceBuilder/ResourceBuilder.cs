@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using GameFramework;
+using Sigtrap.Editors.ShaderStripper;
 using System;
 using System.IO;
 using UnityEditor;
@@ -423,6 +424,9 @@ namespace UnityGameFramework.Editor.ResourceTools
 
         private void BuildResources()
         {
+            ShaderStripperEditor shaderStripper = new();
+            shaderStripper.StartStrip();
+
             if (m_Controller.BuildResources())
             {
                 Debug.Log("Build resources success.");
@@ -432,6 +436,8 @@ namespace UnityGameFramework.Editor.ResourceTools
             {
                 Debug.LogWarning("Build resources failure.");
             }
+
+            shaderStripper.EndStrip();
         }
 
         private void SaveConfiguration()
