@@ -140,6 +140,16 @@ namespace UnityGameFramework.Runtime
             }
         }
 
+        public void OnDispose()
+        {
+            m_UIFormLogic?.OnDispose();
+        }
+
+        private void OnDestroy()
+        {
+            OnDispose();
+        }
+
         /// <summary>
         /// 界面回收。
         /// </summary>

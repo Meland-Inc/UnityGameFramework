@@ -112,6 +112,14 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 界面销毁时调用。
+        /// </summary>
+        protected internal virtual void OnDispose()
+        {
+            //
+        }
+
+        /// <summary>
         /// 界面回收。
         /// </summary>
         protected internal virtual void OnRecycle()
