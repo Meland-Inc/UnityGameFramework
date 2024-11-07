@@ -20,7 +20,6 @@ namespace UnityGameFramework.Runtime
         private UIForm m_UIForm = null;
         private Transform m_CachedTransform = null;
         private int m_OriginalLayer = 0;
-        protected bool IsDisposed { get; private set; } = false;
 
         /// <summary>
         /// 获取界面。
@@ -112,13 +111,12 @@ namespace UnityGameFramework.Runtime
             m_OriginalLayer = gameObject.layer;
         }
 
+        /// <summary>
+        /// 界面销毁时调用。
+        /// </summary>
         protected internal virtual void OnDispose()
         {
-            if (IsDisposed)
-            {
-                return;
-            }
-            IsDisposed = true;
+            //
         }
 
         /// <summary>

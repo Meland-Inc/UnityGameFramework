@@ -142,8 +142,12 @@ namespace UnityGameFramework.Runtime
 
         public void OnDispose()
         {
-            m_UIFormLogic.OnDispose();
-            Destroy(gameObject);
+            m_UIFormLogic?.OnDispose();
+        }
+
+        private void OnDestroy()
+        {
+            OnDispose();
         }
 
         /// <summary>
