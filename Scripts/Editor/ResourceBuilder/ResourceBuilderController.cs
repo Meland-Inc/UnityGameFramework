@@ -468,6 +468,7 @@ namespace UnityGameFramework.Editor.ResourceTools
                 xmlElement.InnerText = AdditionalCompressionSelected.ToString();
                 xmlSettings.AppendChild(xmlElement);
                 xmlElement = xmlDocument.CreateElement("ForceRebuildAssetBundleSelected");
+                ForceRebuildAssetBundleSelected = false;//不保存这个配置
                 xmlElement.InnerText = ForceRebuildAssetBundleSelected.ToString();
                 xmlSettings.AppendChild(xmlElement);
                 xmlElement = xmlDocument.CreateElement("BuildEventHandlerTypeName");
