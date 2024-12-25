@@ -29,7 +29,11 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         public override void LoadBytes(string fileUri, LoadBytesCallbacks loadBytesCallbacks, object userData)
         {
+#if UNITY_WEBGL
+            WebLoadBytes(fileUri, loadBytesCallbacks, userData);
+#else
             StartCoroutine(LoadBytesCo(fileUri, loadBytesCallbacks, userData));
+#endif
         }
 
         /// <summary>
@@ -153,6 +157,29 @@ namespace UnityGameFramework.Runtime
                 loadBytesCallbacks.LoadBytesFailureCallback(fileUri, errorMessage, userData);
             }
         }
+
+#if UNITY_WEBGL
+        private void WebLoadBytes(string fileUri, LoadBytesCallbacks loadBytesCallbacks, object userData)
+        {
+            fileUri = fileUri.Replace("file://", string.Empty);
+            if (System.IO.File.Exists(fileUri))
+            {
+                try
+                {
+                    byte[] bytes = System.IO.File.ReadAllBytes(fileUri);
+                    loadBytesCallbacks.LoadBytesSuccessCallback(fileUri, bytes, 0f, userData);
+                }
+                catch (Exception e)
+                {
+                    loadBytesCallbacks.LoadBytesFailureCallback(fileUri, e.Message, userData);
+                }
+            }
+            else
+            {
+                loadBytesCallbacks.LoadBytesFailureCallback(fileUri, string.Format("Can not load asset '{0}' which is not exist.", fileUri), userData);
+            }
+        }
+#endif
 
 #if UNITY_5_5_OR_NEWER
         private IEnumerator UnloadSceneCo(string sceneAssetName, UnloadSceneCallbacks unloadSceneCallbacks, object userData)
