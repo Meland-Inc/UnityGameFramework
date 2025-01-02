@@ -29,11 +29,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         public override void LoadBytes(string fileUri, LoadBytesCallbacks loadBytesCallbacks, object userData)
         {
-#if UNITY_WEBGL
-            WebLoadBytes(fileUri, loadBytesCallbacks, userData);
-#else
             StartCoroutine(LoadBytesCo(fileUri, loadBytesCallbacks, userData));
-#endif
         }
 
         /// <summary>
