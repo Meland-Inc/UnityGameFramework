@@ -624,7 +624,12 @@ namespace UnityGameFramework.Runtime
             m_ResourceManager.ResourceUpdateFailure += OnResourceUpdateFailure;
             m_ResourceManager.ResourceUpdateAllComplete += OnResourceUpdateAllComplete;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+            string webglAssetPath = LumiAppConfig.GetWebglAssetPath();
+            m_ResourceManager.SetReadOnlyPath(webglAssetPath);
+#else
             m_ResourceManager.SetReadOnlyPath(Application.streamingAssetsPath);
+#endif
             if (m_ReadWritePathType == ReadWritePathType.TemporaryCache)
             {
                 m_ResourceManager.SetReadWritePath(Application.temporaryCachePath);

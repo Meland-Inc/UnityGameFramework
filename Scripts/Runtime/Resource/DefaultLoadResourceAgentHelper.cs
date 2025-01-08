@@ -26,6 +26,7 @@ namespace UnityGameFramework.Runtime
         private string m_FileFullPath = null;
         private string m_FileName = null;
         private string m_BytesFullPath = null;
+        private string m_WebAssetBundleFullPath = null;
         private string m_AssetName = null;
         protected float m_LastProgress = 0f;
         protected bool m_Disposed = false;
@@ -34,6 +35,7 @@ namespace UnityGameFramework.Runtime
 #else
         private WWW m_WWW = null;
 #endif
+        private UnityWebRequest m_WebAssetBundleRequest = null;
         private AssetBundleCreateRequest m_FileAssetBundleCreateRequest = null;
         private AssetBundleCreateRequest m_BytesAssetBundleCreateRequest = null;
         private AssetBundleRequest m_AssetBundleRequest = null;
@@ -42,6 +44,7 @@ namespace UnityGameFramework.Runtime
         protected EventHandler<LoadResourceAgentHelperUpdateEventArgs> m_LoadResourceAgentHelperUpdateEventHandler = null;
         protected EventHandler<LoadResourceAgentHelperReadFileCompleteEventArgs> m_LoadResourceAgentHelperReadFileCompleteEventHandler = null;
         protected EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs> m_LoadResourceAgentHelperReadBytesCompleteEventHandler = null;
+        protected EventHandler<LoadResourceAgentHelperReadAssetBundleCompleteEventArgs> m_LoadResourceAgentHelperReadAssetBundleCompleteEventHandler = null;
         protected EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs> m_LoadResourceAgentHelperParseBytesCompleteEventHandler = null;
         protected EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs> m_LoadResourceAgentHelperLoadCompleteEventHandler = null;
         protected EventHandler<LoadResourceAgentHelperErrorEventArgs> m_LoadResourceAgentHelperErrorEventHandler = null;
@@ -88,6 +91,18 @@ namespace UnityGameFramework.Runtime
             remove
             {
                 m_LoadResourceAgentHelperReadBytesCompleteEventHandler -= value;
+            }
+        }
+
+        public override event EventHandler<LoadResourceAgentHelperReadAssetBundleCompleteEventArgs> LoadResourceAgentHelperReadAssetBundleComplete
+        {
+            add
+            {
+                m_LoadResourceAgentHelperReadAssetBundleCompleteEventHandler += value;
+            }
+            remove
+            {
+                m_LoadResourceAgentHelperReadAssetBundleCompleteEventHandler -= value;
             }
         }
 
@@ -200,6 +215,20 @@ namespace UnityGameFramework.Runtime
 #endif
         }
 
+        public override void ReadWebAssetBundle(string fullPath, uint hashCode)
+        {
+            if (m_LoadResourceAgentHelperReadAssetBundleCompleteEventHandler == null || m_LoadResourceAgentHelperUpdateEventHandler == null || m_LoadResourceAgentHelperErrorEventHandler == null)
+            {
+                Log.Fatal("Load resource agent helper handler is invalid.");
+                return;
+            }
+
+            m_WebAssetBundleFullPath = fullPath;
+            Uri uri = new(fullPath + "?hash=" + hashCode);
+            m_WebAssetBundleRequest = UnityWebRequestAssetBundle.GetAssetBundle(uri, hashCode, 0u);
+            _ = m_WebAssetBundleRequest.SendWebRequest();
+        }
+
         /// <summary>
         /// 通过加载资源代理辅助器开始异步读取资源二进制流。
         /// </summary>
@@ -303,6 +332,7 @@ namespace UnityGameFramework.Runtime
             m_FileFullPath = null;
             m_FileName = null;
             m_BytesFullPath = null;
+            m_WebAssetBundleFullPath = null;
             m_AssetName = null;
             m_LastProgress = 0f;
 
@@ -319,6 +349,8 @@ namespace UnityGameFramework.Runtime
                 m_WWW = null;
             }
 #endif
+            m_WebAssetBundleRequest?.Dispose();
+            m_WebAssetBundleRequest = null;
 
             m_FileAssetBundleCreateRequest = null;
             m_BytesAssetBundleCreateRequest = null;
@@ -361,6 +393,8 @@ namespace UnityGameFramework.Runtime
                     m_WWW = null;
                 }
 #endif
+                m_WebAssetBundleRequest?.Dispose();
+                m_WebAssetBundleRequest = null;
             }
 
             m_Disposed = true;
@@ -373,6 +407,7 @@ namespace UnityGameFramework.Runtime
 #else
             UpdateWWW();
 #endif
+            UpdateWebAssetBundleRequest();
             UpdateFileAssetBundleCreateRequest();
             UpdateBytesAssetBundleCreateRequest();
             UpdateAssetBundleRequest();
@@ -454,6 +489,43 @@ namespace UnityGameFramework.Runtime
             }
         }
 #endif
+
+        private void UpdateWebAssetBundleRequest()
+        {
+            if (m_WebAssetBundleRequest == null)
+            {
+                return;
+            }
+
+            if (m_WebAssetBundleRequest.isDone)
+            {
+
+                if (string.IsNullOrEmpty(m_WebAssetBundleRequest.error))
+                {
+                    AssetBundle assetBundle = DownloadHandlerAssetBundle.GetContent(m_WebAssetBundleRequest);
+                    LoadResourceAgentHelperReadAssetBundleCompleteEventArgs loadResourceAgentHelperReadAssetBundleCompleteEventArgs = LoadResourceAgentHelperReadAssetBundleCompleteEventArgs.Create(assetBundle);
+                    m_LoadResourceAgentHelperReadAssetBundleCompleteEventHandler(this, loadResourceAgentHelperReadAssetBundleCompleteEventArgs);
+                    ReferencePool.Release(loadResourceAgentHelperReadAssetBundleCompleteEventArgs);
+                    m_WebAssetBundleRequest.Dispose();
+                    m_WebAssetBundleRequest = null;
+                    m_WebAssetBundleFullPath = null;
+                    m_LastProgress = 0f;
+                }
+                else
+                {
+                    LoadResourceAgentHelperErrorEventArgs loadResourceAgentHelperErrorEventArgs = LoadResourceAgentHelperErrorEventArgs.Create(LoadResourceStatus.NotExist, Utility.Text.Format("Can not load asset bundle from web '{0}' with error message '{1}'.", m_WebAssetBundleFullPath, m_WebAssetBundleRequest.error));
+                    m_LoadResourceAgentHelperErrorEventHandler(this, loadResourceAgentHelperErrorEventArgs);
+                    ReferencePool.Release(loadResourceAgentHelperErrorEventArgs);
+                }
+            }
+            else if (m_WebAssetBundleRequest.downloadProgress != m_LastProgress)
+            {
+                m_LastProgress = m_WebAssetBundleRequest.downloadProgress;
+                LoadResourceAgentHelperUpdateEventArgs loadResourceAgentHelperUpdateEventArgs = LoadResourceAgentHelperUpdateEventArgs.Create(LoadResourceProgress.ReadResource, m_WebAssetBundleRequest.downloadProgress);
+                m_LoadResourceAgentHelperUpdateEventHandler(this, loadResourceAgentHelperUpdateEventArgs);
+                ReferencePool.Release(loadResourceAgentHelperUpdateEventArgs);
+            }
+        }
 
         private void UpdateFileAssetBundleCreateRequest()
         {

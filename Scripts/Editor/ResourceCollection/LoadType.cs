@@ -45,6 +45,16 @@ namespace UnityGameFramework.Editor.ResourceTools
         /// <summary>
         /// 使用二进制解密方式加载。
         /// </summary>
-        LoadFromBinaryAndDecrypt
+        LoadFromBinaryAndDecrypt,
+
+        /// <summary>
+        /// 使用网络资源加载。
+        /// </summary>
+        LoadFromWebFile,
+
+        /// <summary>
+        /// 使用网络资源加载AssetBundle。
+        /// </summary>
+        LoadFromWebAssetBundle,
     }
 }

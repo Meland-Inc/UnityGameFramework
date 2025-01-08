@@ -33,6 +33,11 @@ namespace UnityGameFramework.Runtime
         public abstract event EventHandler<LoadResourceAgentHelperReadBytesCompleteEventArgs> LoadResourceAgentHelperReadBytesComplete;
 
         /// <summary>
+        /// 加载资源代理辅助器异步读取AssetBundle资源完成事件。
+        /// </summary>
+        public abstract event EventHandler<LoadResourceAgentHelperReadAssetBundleCompleteEventArgs> LoadResourceAgentHelperReadAssetBundleComplete;
+
+        /// <summary>
         /// 加载资源代理辅助器异步将资源二进制流转换为加载对象完成事件。
         /// </summary>
         public abstract event EventHandler<LoadResourceAgentHelperParseBytesCompleteEventArgs> LoadResourceAgentHelperParseBytesComplete;
@@ -65,6 +70,12 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="fullPath">要加载资源的完整路径名。</param>
         public abstract void ReadBytes(string fullPath);
+
+        /// <summary>
+        /// 通过加载资源代理辅助器开始异步读取网络的AssetBundle资源。
+        /// </summary>
+        /// <param name="fullPath"></param>
+        public abstract void ReadWebAssetBundle(string fullPath, uint hashCode);
 
         /// <summary>
         /// 通过加载资源代理辅助器开始异步读取资源二进制流。
